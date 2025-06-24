@@ -16,6 +16,8 @@
       "@/api/*": ["api/*"],
       "@/lib/*": ["lib/*"],
       "@/types/*": ["types/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/schemas/*": ["schemas/*"],
       "@/store": ["store.ts"],
     },
 

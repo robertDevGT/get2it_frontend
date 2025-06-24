@@ -9,7 +9,7 @@ interface Store {
     logedIn: boolean;
 }
 
-export const useStore = create<Store>((set, get) => ({
+export const useStore = create<Store>((set) => ({
     logedIn: localStorage.getItem('AUTH_TOKEN') ? true : false,
     authenticate: async (formData) => {
         try {

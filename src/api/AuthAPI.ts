@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
+import { userSchema } from "@/schemas/authSchemas";
 import { isAxiosError } from "axios";
-import { Auth, LoginType, Token } from "types/authTypes";
+import { Auth, Token, User } from "types/authTypes";
 
 export async function createAccount(formData: Auth) {
     try {
@@ -25,6 +26,20 @@ export async function confirmAccount(token: Token['token']) {
     } catch (error) {
         if (isAxiosError(error)) {
             throw new Error(error.response?.data.error);
+        }
+    }
+}
+
+export async function getUser() {
+    try {
+        const { data } = await api<User>('/auth/user');
+        const response = userSchema.safeParse(data);
+        if (response.success) {
+            return response.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
         }
     }
 }

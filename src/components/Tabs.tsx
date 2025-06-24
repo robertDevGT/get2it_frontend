@@ -8,7 +8,7 @@ export default function Tabs() {
         <div className="relative inline-block text-left">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="border p-2 border-gray-300 rounded shadow"
+                className="border p-2 border-gray-300 rounded shadow cursor-pointer"
             >
                 <p className="font-medium">Menu</p>
             </button>
