@@ -12,6 +12,7 @@
     "paths": {
       "@/views/*": ["views/*"],
       "@/layouts/*": ["layouts/*"],
+      "@/components/*": ["components/*"],
     },
 
     "moduleResolution": "bundler",
