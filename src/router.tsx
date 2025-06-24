@@ -4,8 +4,9 @@ import PublicLayout from "@/layouts/PublicLayout";
 
 const Index = lazy(() => import("@/views/public/Index"));
 
-import Login from "@/views/auth/Login";
-import Register from "@/views/auth/Register";
+const Login = lazy(() => import("@/views/auth/Login"));
+const Register = lazy(() => import("@/views/auth/Register"));
+const ConfirmAccount = lazy(() => import("@/views/auth/ConfirmAccount"));
 
 export default function Router() {
     return (
@@ -16,6 +17,7 @@ export default function Router() {
                         <Route path="/" element={<Index />} index />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/confirm-account" element={<ConfirmAccount />} />
                     </Route>
                 </Routes>
             </Suspense>
