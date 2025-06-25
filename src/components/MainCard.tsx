@@ -5,7 +5,7 @@ type Props = {
 
 export default function MainCard({ title, content }: Props) {
     return (
-        <div className="bg-white rounded-xl shadow-md p-6 w-96 hover:shadow-xl transition-all hover:scale-105">
+        <div className="bg-white rounded-xl shadow-md p-6 lg:w-96 hover:shadow-xl transition-all hover:scale-105">
             <div className="mb-3">
                 <p className="text-2xl font-bold text-[#2E4053]">{title}</p>
             </div>

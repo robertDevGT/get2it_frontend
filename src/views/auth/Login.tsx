@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useStore } from "@/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const Authenticate = useStore((state) => state.authenticate);
@@ -77,6 +77,22 @@ export default function Login() {
           {isPending ? <p>Cargando...</p> : <p>Iniciar Sesión</p>}
         </button>
       </form>
+
+      <nav className="mt-10 flex flex-col space-y-4">
+        <Link
+          to={'/login'}
+          className="text-center  font-normal"
+        >
+          ¿Aún no tienes una cuenta? Crea Una
+        </Link>
+
+        <Link
+          to={'/forgot-password'}
+          className="text-center  font-normal"
+        >
+          ¿Olvidaste tu contraseña? Reestablecer
+        </Link>
+      </nav>
     </>
   )
 }

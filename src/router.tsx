@@ -26,11 +26,7 @@ export default function Router() {
                         <Route path="/confirm-account" element={<ConfirmAccount />} />
                         <Route path="/profile" element={<Profile />} />
                     </Route>
-                </Routes>
-            </Suspense>
 
-            <Suspense fallback={<div>Cargando...</div>}>
-                <Routes>
                     <Route element={<AuthLayout />}>
                         <Route path="/dashboard" element={<IndexDashboard />} />
                         <Route path="/projects" element={<IndexProjects />} />

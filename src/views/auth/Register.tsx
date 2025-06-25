@@ -4,6 +4,7 @@ import { Auth } from "types/authTypes";
 import { useMutation } from "@tanstack/react-query";
 import { createAccount } from "@/api/AuthAPI";
 import { enqueueSnackbar } from "notistack";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const {
@@ -117,6 +118,21 @@ export default function Register() {
           {isPending ? <p>Cargando...</p> : <p>Crear Cuenta</p>}
         </button>
       </form>
+      <nav className="mt-10 flex flex-col space-y-4">
+        <Link
+          to={'/login'}
+          className="text-center  font-normal"
+        >
+          ¿Ya tienes una cuenta? Inicia Sesión
+        </Link>
+
+        <Link
+          to={'/forgot-password'}
+          className="text-center  font-normal"
+        >
+          ¿Olvidaste tu contraseña? Reestablecer
+        </Link>
+      </nav>
     </>
   )
 }
