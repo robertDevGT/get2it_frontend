@@ -40,7 +40,7 @@ export async function getProjectById(id: Project['id']) {
 export async function createProject(formData: DraftProject) {
     try {
         const url = '/projects';
-        const { data } = await api.post<string>(url,formData);
+        const { data } = await api.post<string>(url, formData);
         return data;
     } catch (error) {
         if (isAxiosError(error)) {

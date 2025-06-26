@@ -19,6 +19,13 @@ export default function ModalCreateTask() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        reset
+    } = useForm<DraftTask>();
+
     const { mutate, isPending } = useMutation({
         mutationFn: createTask,
         onError: (error) => {
@@ -34,17 +41,10 @@ export default function ModalCreateTask() {
             });
 
             queryClient.invalidateQueries({ queryKey: ["getProjectById", projectId] });
+            reset();
             navigate(location.pathname, { replace: true });
         }
     });
-
-    const {
-        handleSubmit,
-        register,
-        formState: { errors }
-    } = useForm<DraftTask>();
-
-
 
     const handleCloseModal = () => {
         navigate(location.pathname, { replace: true });
@@ -63,6 +63,7 @@ export default function ModalCreateTask() {
                                 required: 'La descripción de la tarea es requerida'
                             })}
                             type="text"
+                            autoComplete="off"
                             placeholder="Descripción de la tarea"
                             className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
                         />

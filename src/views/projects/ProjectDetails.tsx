@@ -1,18 +1,18 @@
 import { getProjectById } from "@/api/ProjectsAPI";
-import { Task } from "@/types/taskTypes";
+import { TaskProject } from "@/types/taskTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMemo } from "react";
 import { PlusIcon } from "lucide-react";
 import TaskStatusColumn from "@/components/projects/TaskStatusColumn";
 import ModalCreateTask from "@/components/modals/ModalCreateTask";
+import ModalTaskDetails from "@/components/modals/ModalTaskDetails";
 
-type GroupedTasks = Record<string, Task[]>;
+type GroupedTasks = Record<string, TaskProject[]>;
 
 const initialStatusGroups: GroupedTasks = {
     pending: [],
     onHold: [],
-    inProgress: [],
+    InProgress: [],
     underReview: [],
     completed: [],
 };
@@ -27,7 +27,7 @@ export default function ProjectDetails() {
         enabled: !!projectId,
     });
 
-   const groupedTasks = project?.tasks.reduce((acc, task) => {
+    const groupedTasks = project?.tasks.reduce((acc, task) => {
         let currentGroup = acc[task.status] ? [...acc[task.status]] : [];
         currentGroup = [...currentGroup, task]
         return { ...acc, [task.status]: currentGroup };
@@ -64,7 +64,7 @@ export default function ProjectDetails() {
                     <h2 className="text-xl font-semibold text-gray-700 mb-4">
                         Panel de Tareas
                     </h2>
-                    <div className="flex gap-4 overflow-x-auto 2xl:overflow-visible pb-10">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hidden 2xl:overflow-visible pb-10">
                         {Object.entries(groupedTasks).map(([status, tasks]) => (
                             <TaskStatusColumn key={status} status={status} tasks={tasks} />
                         ))}
@@ -73,6 +73,7 @@ export default function ProjectDetails() {
 
             </div>
             <ModalCreateTask />
+            <ModalTaskDetails />
         </>
     );
 }

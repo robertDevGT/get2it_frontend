@@ -4,6 +4,7 @@ export const userSchema = z.object({
     id: z.number(),
     email: z.string(),
     name: z.string(),
+    profileImg: z.string()
 });
 
 export const AuthSchema = userSchema.pick({ email: true, name: true }).extend({

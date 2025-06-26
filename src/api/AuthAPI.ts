@@ -43,3 +43,18 @@ export async function getUser() {
         }
     }
 }
+
+export async function changeProfilePic(img: File) {
+    try {
+        const url = '/auth/user';
+        const formData = new FormData();
+        formData.append("img", img);
+
+        const { data } = await api.patch(url, formData);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}

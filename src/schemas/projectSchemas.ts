@@ -12,6 +12,6 @@ export const ProjectSchema = z.object({
 export const ProjectsSchema = z.array(ProjectSchema.pick({ id: true, projectName: true, description: true, createdAt: true }));
 
 export const ProjectDetailsSchema = ProjectSchema.pick({ id: true, projectName: true, description: true }).extend({
-    manager: userSchema.pick({ name: true, email: true }),
-    tasks: z.array(TaskSchema)
+    manager: userSchema.pick({ name: true, email: true}),
+    tasks: z.array(TaskSchema.pick({ id: true, createdAt: true, description: true, status: true, assignee:true }))
 });
