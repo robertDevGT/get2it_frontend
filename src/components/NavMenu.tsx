@@ -39,11 +39,11 @@ export default function NavMenu() {
                         <Link
                             to='/profile'
                             className='block p-2 hover:text-purple-950 hover:bg-gray-200 transition-colors'
-                        >Mi Perfil</Link>
+                        >Perfil</Link>
                         <Link
-                            to='/dashboard'
+                            to='/projects'
                             className='block w-full p-2 hover:text-purple-950 hover:bg-gray-200 transition-colors'
-                        >Dashboard</Link>
+                        >Mis Proyectos</Link>
                         <button
                             className='block w-full p-2 bg-green-500 text-white cursor-pointer hover:bg-green-600 transition-colors mt-2'
                             type='button'

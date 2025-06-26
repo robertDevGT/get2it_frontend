@@ -10,9 +10,10 @@ const Login = lazy(() => import("@/views/auth/Login"));
 const Register = lazy(() => import("@/views/auth/Register"));
 const ConfirmAccount = lazy(() => import("@/views/auth/ConfirmAccount"));
 
-const IndexDashboard = lazy(() => import("@/views/dashboard/IndexDashboard"));
 
 const IndexProjects = lazy(() => import("@/views/projects/IndexProjects"));
+const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails"));
+const CreateProject = lazy(() => import("@/views/projects/CreateProject"));
 
 export default function Router() {
     return (
@@ -24,12 +25,13 @@ export default function Router() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/confirm-account" element={<ConfirmAccount />} />
-                        <Route path="/profile" element={<Profile />} />
                     </Route>
 
                     <Route element={<AuthLayout />}>
-                        <Route path="/dashboard" element={<IndexDashboard />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/projects" element={<IndexProjects />} />
+                        <Route path="/projects/create" element={<CreateProject />} />
+                        <Route path="/projects/:projectId" element={<ProjectDetails />} />
                     </Route>
                 </Routes>
             </Suspense>

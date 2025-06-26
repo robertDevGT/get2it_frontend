@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { LoginType } from "./types/authTypes";
 import { isAxiosError } from "axios";
+
 import api from "./lib/axios";
 
 interface Store {

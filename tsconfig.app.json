@@ -19,6 +19,8 @@
       "@/hooks/*": ["hooks/*"],
       "@/schemas/*": ["schemas/*"],
       "@/store": ["store.ts"],
+      "@/utils/*": ["utils/*"],
+      "@/locales/*": ["locales/*"],
     },
 
     "moduleResolution": "bundler",

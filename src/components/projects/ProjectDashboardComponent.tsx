@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MenuIcon } from "lucide-react";
+import { formatDate } from "@/utils/utils";
 
 type Props = {
     project: Project;
@@ -17,6 +18,9 @@ export default function ProjectDashboardComponent({ project }: Props) {
                 </p>
                 <p className="text-gray-600 mt-1 text-sm leading-relaxed">
                     {project.description}
+                </p>
+                <p className="text-gray-600 mt-1 text-xs leading-relaxed">
+                    Creado: <span className="font-bold">{formatDate(project.createdAt)}</span>
                 </p>
             </div>
 

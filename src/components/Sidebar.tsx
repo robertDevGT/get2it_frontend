@@ -5,7 +5,7 @@ import NavLinkComponent from "./NavLinkComponent";
 export default function Sidebar() {
   return (
 
-    <div className="h-screen w-56">
+    <div className="h-screen w-32">
       <div className="space-y-4 max-h-screen  overflow-y-auto scrollbar-hide">
         <div>
           <h2 className="mb-2 p-5 text-xl font-semibold tracking-tight">
