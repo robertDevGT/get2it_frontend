@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { ProjectDetailsSchema, ProjectsSchema } from "@/schemas/projectSchemas";
+import { ProjectDetailsSchema, ProjectsSchema, ProjectTasksSchema, ProjectTeamSchema } from "@/schemas/projectSchemas";
 import { DraftProject, Project } from "@/types/projectTypes";
 import { isAxiosError } from "axios";
 
@@ -27,6 +27,38 @@ export async function getProjectById(id: Project['id']) {
         const { data } = await api(url);
         const result = ProjectDetailsSchema.safeParse(data);
         if (result.success) {
+            return result.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error)) {
+            throw new Error(error.response?.data.error);
+
+        }
+    }
+}
+
+export async function getProjectTeam(id: Project['id']) {
+    try {
+        const url = `/projects/${id}/team`
+        const { data } = await api(url);
+        const result = ProjectTeamSchema.safeParse(data);
+        if(result.success){
+            return result.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error)) {
+            throw new Error(error.response?.data.error);
+
+        }
+    }
+}
+
+export async function getProjectTasks(id: Project['id']) {
+    try {
+        const url = `/projects/${id}/tasks`
+        const { data } = await api(url);
+        const result = ProjectTasksSchema.safeParse(data);
+        if(result.success){
             return result.data;
         }
     } catch (error) {

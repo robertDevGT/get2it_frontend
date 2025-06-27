@@ -1,15 +1,20 @@
 import { Project } from "@/types/projectTypes";
 import { Link } from "react-router-dom";
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MenuIcon } from "lucide-react";
 import { formatDate } from "@/utils/utils";
+import { User } from "@/types/authTypes";
 
 type Props = {
     project: Project;
+    user: User;
 }
 
-export default function ProjectDashboardComponent({ project }: Props) {
+export default function ProjectDashboardComponent({ project, user }: Props) {
+
+    const isManager = useMemo(() => project.managerId === user.id, [project, user]);
+
     return (
         <div className="p-6 bg-white border-l-8 border-green-500 shadow-sm hover:shadow-md transition-shadow duration-200 flex justify-between">
             <div>
@@ -21,6 +26,10 @@ export default function ProjectDashboardComponent({ project }: Props) {
                 </p>
                 <p className="text-gray-600 mt-1 text-xs leading-relaxed">
                     Creado: <span className="font-bold">{formatDate(project.createdAt)}</span>
+                </p>
+
+                <p className={`text-gray-600 mt-1 text-xs leading-relaxed ${isManager ? 'bg-green-500' : 'bg-amber-500'} w-fit text-white font-bold p-2 rounded`}>
+                    {isManager ? 'Manager' : 'Colaborador'}
                 </p>
             </div>
 

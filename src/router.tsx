@@ -14,6 +14,7 @@ const ConfirmAccount = lazy(() => import("@/views/auth/ConfirmAccount"));
 const IndexProjects = lazy(() => import("@/views/projects/IndexProjects"));
 const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails"));
 const CreateProject = lazy(() => import("@/views/projects/CreateProject"));
+const ProjectTeam = lazy(() => import("@/views/projects/ProjectTeam"));
 
 export default function Router() {
     return (
@@ -32,6 +33,7 @@ export default function Router() {
                         <Route path="/projects" element={<IndexProjects />} />
                         <Route path="/projects/create" element={<CreateProject />} />
                         <Route path="/projects/:projectId" element={<ProjectDetails />} />
+                        <Route path="/projects/team/:projectId" element={<ProjectTeam />} />
                     </Route>
                 </Routes>
             </Suspense>

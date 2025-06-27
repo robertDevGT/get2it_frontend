@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
-import Tabs from "@/components/Tabs";
-import { ImageIcon } from "lucide-react";
-import ModalChangeProfilePicture from "@/components/modals/ModalChangeProfilePicture";
+import { ImageIcon, UserIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Tabs from "@/components/Tabs";
+import ModalChangeProfilePicture from "@/components/modals/ModalChangeProfilePicture";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -15,13 +15,19 @@ export default function Profile() {
       <div className="max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
         <div className="flex items-center space-x-6 px-8 py-10">
           <div className="flex flex-col gap-2 justify-center items-center">
-            <div className="flex items-center justify-center w-24 h-24 rounded-full overflow-hidden bg-gray-100 shadow-md">
-              <img
-                src={`${import.meta.env.VITE_UPLOADS_URL}/${data.profileImg}`}
-                alt="Imagen de perfil"
-                className="w-full h-full object-cover"
-              />
-            </div>
+
+            {data.profileImg ? (
+              <>
+                <div className="flex items-center justify-center w-24 h-24 rounded-full overflow-hidden bg-gray-100 shadow-md">
+                  <img
+                    src={`${import.meta.env.VITE_UPLOADS_URL}/${data.profileImg}`}
+                    alt="Imagen de perfil"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </>
+            ) : <UserIcon className="w-24 h-24 " />}
+
             <div className="flex gap-2 items-center shadow p-2 capitalize" onClick={() => navigate(`${location.pathname}?changeProfilePic=true`)}>
               <ImageIcon className="w-4 h-4" />
               <p className="text-xs font-bold">Editar</p>
