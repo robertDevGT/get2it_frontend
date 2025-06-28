@@ -40,7 +40,7 @@ export default function ModalCreateTask() {
                 autoHideDuration: 3000
             });
 
-            queryClient.invalidateQueries({ queryKey: ["getProjectById", projectId] });
+            queryClient.invalidateQueries({ queryKey: ["getProjectTasks", projectId] });
             reset();
             navigate(location.pathname, { replace: true });
         }

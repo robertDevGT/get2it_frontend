@@ -5,13 +5,12 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { addCollaboratorToProject, getCollaboratorByEmail } from "@/api/CollaboratorAPI";
 import { CheckIcon } from "lucide-react";
+import { enqueueSnackbar } from "notistack";
 import ProjectDetailsLayout from "./ProjectDetailsLayout";
 import ErrorMessage from "@/components/Error";
-import { enqueueSnackbar } from "notistack";
 
 export default function ProjectTeam() {
   const { projectId } = useParams<{ projectId: string }>()!!;
-
   const { data, refetch } = useQuery({
     queryKey: ['getProjectTeam', projectId],
     queryFn: () => getProjectTeam(Number(projectId)),
@@ -87,6 +86,7 @@ export default function ProjectTeam() {
           )}
         </div>
       </section>
+
 
       <section className="mt-10 w-2/3 mx-auto">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">

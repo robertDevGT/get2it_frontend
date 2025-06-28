@@ -2,9 +2,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTaskById } from "@/api/TasksAPI";
 import { formatDate } from "@/utils/utils";
-import Modal from "../Modal";
 import { statusTranslations } from "@/locales/es";
-import NoteComponent from "../notes/NoteComponent";
+import Modal from "../Modal";
+import ModalSelectAssigneeView from "../tasks/ModalSelectAssigneeView";
+import NotesComponent from "../tasks/NotesComponent";
+
 
 const statusStyles: Record<string, string> = {
     pending: "bg-slate-500/30",
@@ -20,7 +22,6 @@ export default function ModalTaskDetails() {
     const taskId = queryParams.get('taskId')!;
     const open = taskId ? true : false;
 
-
     const { data: task } = useQuery({
         queryKey: ['getTaskById', taskId],
         queryFn: () => getTaskById(Number(taskId)),
@@ -35,11 +36,18 @@ export default function ModalTaskDetails() {
 
 
     if (task) return (
-        <Modal modal={open} closeModal={() => handleCloseModal()} title="Detalles de Tarea">
-            <div className="p-8 bg-white rounded-2xl shadow-lg space-y-6">
-                <h2 className="text-2xl font-bold text-gray-800 border-b pb-2">
-                    Detalle de la Tarea
-                </h2>
+        <Modal modal={open} closeModal={() => handleCloseModal()} title="Detalles de Tarea" height="min-h-96">
+            <div className="p-8 bg-white rounded-2xl space-y-6">
+                <div className="border-b flex justify-between ga">
+                    <h2 className="text-2xl font-bold text-gray-800 pb-2">
+                        Detalle de la Tarea
+                    </h2>
+
+                    <div className="flex gap-2 items-center">
+                        <span className="text-xs text-gray-500">Asignado a: </span>
+                        <ModalSelectAssigneeView assignee={task.assignee ?? null} />
+                    </div>
+                </div>
 
                 <div className="space-y-2">
                     <p>
@@ -60,16 +68,7 @@ export default function ModalTaskDetails() {
                     </p>
                 </div>
 
-                {task.notes.length > 0 && (
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-700 mb-2">Notas</h3>
-                        <div className="space-y-4">
-                            {task.notes.map((note) => (
-                                <NoteComponent key={note.id} note={note} />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <NotesComponent notes={task.notes} />
             </div>
         </Modal>
     )

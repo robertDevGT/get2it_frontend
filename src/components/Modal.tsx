@@ -7,12 +7,13 @@ type Props = {
     title: string;
     children: ReactNode;
     width?: string;
+    height?:string;
 }
 
-export default function Modal({ modal, closeModal, title, children, width = 'sm:w-full sm:max-w-3xl' }: Props) {
+export default function Modal({ modal, closeModal, title, children, width = 'sm:w-full sm:max-w-3xl', height = '' }: Props) {
     return (
         <Transition appear show={modal} as={Fragment}>
-            <Dialog as="div" className="relative z-[10050]" onClose={() => closeModal()}>
+            <Dialog as="div" className="relative z-[200]" onClose={() => closeModal()}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -36,7 +37,7 @@ export default function Modal({ modal, closeModal, title, children, width = 'sm:
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className={`relative transform overflow-hidden bg-white shadow-xl ${width}`}>
+                            <Dialog.Panel className={`relative transform overflow-hidden bg-white shadow-xl ${width} ${height}`}>
                                 <div className="flex justify-between items-center bg-green-600 px-6 py-4 text-white">
                                     <h3 className="text-xl font-bold uppercase">
                                         {title}
