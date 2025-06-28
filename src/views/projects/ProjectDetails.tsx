@@ -3,8 +3,6 @@ import { TaskProject } from "@/types/taskTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import TaskStatusColumn from "@/components/projects/TaskStatusColumn";
-import ModalCreateTask from "@/components/modals/ModalCreateTask";
-import ModalTaskDetails from "@/components/modals/ModalTaskDetails";
 import ProjectDetailsLayout from "./ProjectDetailsLayout";
 
 type GroupedTasks = Record<string, TaskProject[]>;
