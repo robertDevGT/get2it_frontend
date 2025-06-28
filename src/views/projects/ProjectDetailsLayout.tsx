@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProjectById } from "@/api/ProjectsAPI";
 import ProjectTabs from "@/components/projects/ProjectTabs";
+import ModalCreateTask from "@/components/modals/ModalCreateTask";
+import ModalTaskDetails from "@/components/modals/ModalTaskDetails";
 
 type Props = {
     children: React.ReactNode
@@ -42,6 +44,9 @@ export default function ProjectDetailsLayout({ children }: Props) {
             <section>
                 {children}
             </section>
+
+            <ModalCreateTask />
+            <ModalTaskDetails managerId={project.managerId}/>
         </div>
     );
 }

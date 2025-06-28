@@ -19,10 +19,10 @@ export const TeamMemberSchema = z.object({
 
 export const ProjectsSchema = z.array(ProjectSchema.pick({ id: true, projectName: true, description: true, createdAt: true, managerId: true }));
 
-export const ProjectDetailsSchema = ProjectSchema.pick({ id: true, projectName: true, description: true }).extend({
+export const ProjectDetailsSchema = ProjectSchema.pick({ id: true, projectName: true, description: true, managerId: true }).extend({
     manager: userSchema.pick({ name: true, email: true }),
 });
 
-export const ProjectTasksSchema = z.array(TaskSchema.pick({ id: true, createdAt: true, description: true, status: true, assignee:true}));
+export const ProjectTasksSchema = z.array(TaskSchema.pick({ id: true, createdAt: true, description: true, status: true, assignee: true }));
 
 export const ProjectTeamSchema = z.array(TeamMemberSchema);

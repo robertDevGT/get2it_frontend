@@ -36,3 +36,17 @@ export async function getTaskById(id: Task['id']) {
         }
     }
 }
+
+export async function changeTaskStatus({ taskId, status }: { taskId: Task['id'], status: string }) {
+    try {
+        const url = `/tasks/task/${taskId}`;
+        const { data } = await api.patch(url, { status });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error)) {
+            throw new Error(error.response?.data.error);
+
+        }
+    }
+}

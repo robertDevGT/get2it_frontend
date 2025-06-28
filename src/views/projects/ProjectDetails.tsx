@@ -45,8 +45,6 @@ export default function ProjectDetails() {
                     <TaskStatusColumn key={status} status={status} tasks={tasks} />
                 ))}
             </div>
-            <ModalCreateTask />
-            <ModalTaskDetails />
         </ProjectDetailsLayout>
     );
 }

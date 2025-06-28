@@ -2,25 +2,25 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTaskById } from "@/api/TasksAPI";
 import { formatDate } from "@/utils/utils";
-import { statusTranslations } from "@/locales/es";
 import Modal from "../Modal";
 import ModalSelectAssigneeView from "../tasks/ModalSelectAssigneeView";
 import NotesComponent from "../tasks/NotesComponent";
+import ModalStatusView from "../tasks/ModalStatusView";
+import { Project } from "@/types/projectTypes";
+import { useAuth } from "@/hooks/useAuth";
+import { UserIcon } from "lucide-react";
 
+type Props = {
+    managerId: Project['managerId'];
+}
 
-const statusStyles: Record<string, string> = {
-    pending: "bg-slate-500/30",
-    onHold: "bg-red-500/30",
-    InProgress: "bg-blue-500/30",
-    underReview: "bg-amber-500/30",
-    completed: "bg-emerald-500/30",
-};
-
-export default function ModalTaskDetails() {
+export default function ModalTaskDetails({ managerId }: Props) {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const taskId = queryParams.get('taskId')!;
     const open = taskId ? true : false;
+
+    const { data: user } = useAuth();
 
     const { data: task } = useQuery({
         queryKey: ['getTaskById', taskId],
@@ -35,7 +35,7 @@ export default function ModalTaskDetails() {
     }
 
 
-    if (task) return (
+    if (task && user) return (
         <Modal modal={open} closeModal={() => handleCloseModal()} title="Detalles de Tarea" height="min-h-96">
             <div className="p-8 bg-white rounded-2xl space-y-6">
                 <div className="border-b flex justify-between ga">
@@ -43,9 +43,33 @@ export default function ModalTaskDetails() {
                         Detalle de la Tarea
                     </h2>
 
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center mb-2">
                         <span className="text-xs text-gray-500">Asignado a: </span>
-                        <ModalSelectAssigneeView assignee={task.assignee ?? null} />
+
+                        {managerId === user.id ? (
+                            <ModalSelectAssigneeView assignee={task.assignee ?? null} />
+                        ) :
+                            (
+                                <>
+                                    {task.assignee ? (
+                                        <div className="flex gap-2 shadow p-2">
+                                            <img
+                                                src={`${import.meta.env.VITE_UPLOADS_URL}/${task.assignee.profileImg}`}
+                                                alt="Imagen de perfil"
+                                                className="w-6 h-6 object-cover rounded-full"
+                                            />
+                                            <p className="text-sm text-gray-700">{task.assignee.name}</p>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2 text-gray-500">
+                                            <UserIcon className="w-5 h-5" />
+                                            <p className="text-sm">Sin asignación</p>
+                                        </div>
+                                    )}
+                                </>
+                            )
+
+                        }
                     </div>
                 </div>
 
@@ -54,14 +78,8 @@ export default function ModalTaskDetails() {
                         <span className="font-medium text-gray-600">Descripción:</span>{" "}
                         <span className="text-gray-800">{task.description}</span>
                     </p>
-                    <p>
-                        <span className="font-medium text-gray-600">Estado:</span>{" "}
-                        <span
-                            className={`px-2 py-1 text-sm rounded-full text-white font-bold ${statusStyles[task.status]}`}
-                        >
-                            {statusTranslations[task.status]}
-                        </span>
-                    </p>
+                    <ModalStatusView task={task} />
+
                     <p>
                         <span className="font-medium text-gray-600">Creado el:</span>{" "}
                         <span className="text-gray-800">{formatDate(task.createdAt)}</span>
