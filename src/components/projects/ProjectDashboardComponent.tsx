@@ -1,10 +1,11 @@
 import { Project } from "@/types/projectTypes";
 import { Link } from "react-router-dom";
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MenuIcon } from "lucide-react";
 import { formatDate } from "@/utils/utils";
 import { User } from "@/types/authTypes";
+import { useAuthorization } from "@/hooks/useAuthorization";
 
 type Props = {
     project: Project;
@@ -12,8 +13,8 @@ type Props = {
 }
 
 export default function ProjectDashboardComponent({ project, user }: Props) {
-
-    const isManager = useMemo(() => project.managerId === user.id, [project, user]);
+ 
+    const { data: hasPermission } = useAuthorization({projectId: project.id, userId: user.id, enabled:true});
 
     return (
         <div className="p-6 bg-white border-l-8 border-green-500 shadow-sm hover:shadow-md transition-shadow duration-200 flex justify-between">
@@ -28,8 +29,8 @@ export default function ProjectDashboardComponent({ project, user }: Props) {
                     Creado: <span className="font-bold">{formatDate(project.createdAt)}</span>
                 </p>
 
-                <p className={`text-gray-600 mt-1 text-xs leading-relaxed ${isManager ? 'bg-green-500' : 'bg-amber-500'} w-fit text-white font-bold p-2 rounded`}>
-                    {isManager ? 'Manager' : 'Colaborador'}
+                <p className={`text-gray-600 mt-1 text-xs leading-relaxed ${hasPermission ? 'bg-green-500' : 'bg-amber-500'} w-fit text-white font-bold p-2 rounded`}>
+                    {hasPermission ? 'Manager' : 'Colaborador'}
                 </p>
             </div>
 
@@ -52,18 +53,25 @@ export default function ProjectDashboardComponent({ project, user }: Props) {
                                 </Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link to={`/projects/${project.id}/edit`}
-                                    className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-200 transition-colors'>
-                                    Editar Proyecto
-                                </Link>
+
+                                {hasPermission ? (
+                                    <Link to={`/projects/${project.id}/edit`}
+                                        className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-200 transition-colors'>
+                                        Editar Proyecto
+                                    </Link>
+
+                                ) : <p></p>}
                             </Menu.Item>
                             <Menu.Item>
-                                <button
-                                    type='button'
-                                    className='w-full px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-200 transition-colors cursor-pointer'
-                                >
-                                    Eliminar Proyecto
-                                </button>
+                                {hasPermission ? (
+                                    <button
+                                        type='button'
+                                        className='w-full px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-200 transition-colors cursor-pointer'
+                                    >
+                                        Eliminar Proyecto
+                                    </button>
+
+                                ) : <p></p>}
                             </Menu.Item>
                         </Menu.Items>
                     </Transition>

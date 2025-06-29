@@ -8,9 +8,15 @@ import { CheckIcon } from "lucide-react";
 import { enqueueSnackbar } from "notistack";
 import ProjectDetailsLayout from "./ProjectDetailsLayout";
 import ErrorMessage from "@/components/Error";
+import { useAuth } from "@/hooks/useAuth";
+import { useAuthorization } from "@/hooks/useAuthorization";
 
 export default function ProjectTeam() {
   const { projectId } = useParams<{ projectId: string }>()!!;
+  const { data: user } = useAuth();
+
+  const { data: hasPermission } = useAuthorization({ projectId: Number(projectId), userId: user?.id ?? 0, enabled: !!user?.id });
+
   const { data, refetch } = useQuery({
     queryKey: ['getProjectTeam', projectId],
     queryFn: () => getProjectTeam(Number(projectId)),
@@ -47,7 +53,7 @@ export default function ProjectTeam() {
   const onSubmit = (data: { email: string }) => {
     mutation.mutate({ email: data.email, projectId: Number(projectId) });
   }
-  if (data) return (
+  if (data && user) return (
     <ProjectDetailsLayout>
       <h2 className="text-xl font-semibold text-gray-700 mb-4">
         Team
@@ -87,72 +93,74 @@ export default function ProjectTeam() {
         </div>
       </section>
 
+      {hasPermission && (
+        <section className="mt-10 w-2/3 mx-auto">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            Agregar Colaborador
+          </h2>
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Correo del usuario:</label>
+              <input
+                {...register('email', {
+                  required: 'El email es requerido',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Formato de email inválido'
+                  }
+                })}
+                type="text"
+                autoComplete="off"
+                placeholder="Correo Ej: correo@correo.com"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+              />
 
-      <section className="mt-10 w-2/3 mx-auto">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">
-          Agregar Colaborador
-        </h2>
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">Correo del usuario:</label>
-            <input
-              {...register('email', {
-                required: 'El email es requerido',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Formato de email inválido'
-                }
-              })}
-              type="text"
-              autoComplete="off"
-              placeholder="Correo Ej: correo@correo.com"
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
-            />
-
-            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-          </div>
-
-          <div className="flex justify-end">
-            <button disabled={mutation.isPending} className="w-1/3 font-bold p-2 rounded bg-green-500 hover:bg-green-600 text-white uppercase cursor-pointer text-xs">
-              {mutation.isPending ? <p>Cargando...</p> : <p>Buscar</p>}
-            </button>
-          </div>
-        </form>
-
-        <div>
-          {mutation.isPending && <p>Cargando...</p>}
-          {mutation.data ? (
-            <div className="flex w-full gap-2 items-center shadow p-1 mt-5">
-              <div className="flex w-full gap-2 items-center">
-                <img
-                  src={`${import.meta.env.VITE_UPLOADS_URL}/${mutation.data.profileImg}`}
-                  alt={`Imagen de ${mutation.data.name}`}
-                  className="w-12 h-12 rounded-full object-cover border-4 border-blue-100 shadow"
-                />
-                <p className="text-xs">{mutation.data.name}</p>
-              </div>
-
-              {mutation.data.flag ? (
-                <div className="text-xs text-green-600 p-2">
-                  <CheckIcon className="w-4 h-4" />
-                </div>
-              ) : (
-                <button
-                  className="bg-amber-500 text-xs text-white font-bold rounded p-2"
-                  onClick={() => {
-                    if (mutation.data?.id) {
-                      mutate({ projectId: Number(projectId), userId: mutation.data.id });
-                    }
-                  }}
-                >
-                  Añadir
-                </button>
-              )}
-
+              {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
             </div>
-          ) : <p className="text-center mt-5">Usuario no encontrado</p>}
-        </div>
-      </section>
+
+            <div className="flex justify-end">
+              <button disabled={mutation.isPending} className="w-1/3 font-bold p-2 rounded bg-green-500 hover:bg-green-600 text-white uppercase cursor-pointer text-xs">
+                {mutation.isPending ? <p>Cargando...</p> : <p>Buscar</p>}
+              </button>
+            </div>
+          </form>
+
+          <div>
+            {mutation.isPending && <p>Cargando...</p>}
+            {mutation.data ? (
+              <div className="flex w-full gap-2 items-center shadow p-1 mt-5">
+                <div className="flex w-full gap-2 items-center">
+                  <img
+                    src={`${import.meta.env.VITE_UPLOADS_URL}/${mutation.data.profileImg}`}
+                    alt={`Imagen de ${mutation.data.name}`}
+                    className="w-12 h-12 rounded-full object-cover border-4 border-blue-100 shadow"
+                  />
+                  <p className="text-xs">{mutation.data.name}</p>
+                </div>
+
+                {mutation.data.flag ? (
+                  <div className="text-xs text-green-600 p-2">
+                    <CheckIcon className="w-4 h-4" />
+                  </div>
+                ) : (
+                  <button
+                    className="bg-amber-500 text-xs text-white font-bold rounded p-2"
+                    onClick={() => {
+                      if (mutation.data?.id) {
+                        mutate({ projectId: Number(projectId), userId: mutation.data.id });
+                      }
+                    }}
+                  >
+                    Añadir
+                  </button>
+                )}
+
+              </div>
+            ) : <p className="text-center mt-5">Usuario no encontrado</p>}
+          </div>
+        </section>
+      )}
+
     </ProjectDetailsLayout>
   );
 }

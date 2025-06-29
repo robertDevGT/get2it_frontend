@@ -1,4 +1,4 @@
-import { ListOrdered, Users } from 'lucide-react';
+import { ChartScatterIcon, ListOrdered, Users } from 'lucide-react';
 import { NavLink, useParams } from 'react-router-dom';
 
 export default function ProjectTabs() {
@@ -23,6 +23,14 @@ export default function ProjectTabs() {
                         >
                             <Users />
                             <span>Team</span>
+                        </NavLink>
+
+                        <NavLink
+                            to={`/projects/stadistics/${projectId}`}
+                            className={({ isActive }) => `border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium gap-2 ${isActive ? "text-green-500" : ""}`}
+                        >
+                            <ChartScatterIcon />
+                            <span>Estadisticas</span>
                         </NavLink>
                     </nav>
                 </div>

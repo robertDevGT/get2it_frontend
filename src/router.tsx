@@ -15,6 +15,7 @@ const IndexProjects = lazy(() => import("@/views/projects/IndexProjects"));
 const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails"));
 const CreateProject = lazy(() => import("@/views/projects/CreateProject"));
 const ProjectTeam = lazy(() => import("@/views/projects/ProjectTeam"));
+const EditProject = lazy(() => import("@/views/projects/EditProject"));
 
 export default function Router() {
     return (
@@ -33,6 +34,7 @@ export default function Router() {
                         <Route path="/projects" element={<IndexProjects />} />
                         <Route path="/projects/create" element={<CreateProject />} />
                         <Route path="/projects/:projectId" element={<ProjectDetails />} />
+                        <Route path="/projects/:projectId/edit" element={<EditProject />} />
                         <Route path="/projects/team/:projectId" element={<ProjectTeam />} />
                     </Route>
                 </Routes>
