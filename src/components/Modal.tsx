@@ -8,9 +8,10 @@ type Props = {
     children: ReactNode;
     width?: string;
     height?:string;
+    color?:string;
 }
 
-export default function Modal({ modal, closeModal, title, children, width = 'sm:w-full sm:max-w-3xl', height = '' }: Props) {
+export default function Modal({ modal, closeModal, title, children, width = 'sm:w-full sm:max-w-3xl', height = '', color='bg-green-600'}: Props) {
     return (
         <Transition appear show={modal} as={Fragment}>
             <Dialog as="div" className="relative z-[200]" onClose={() => closeModal()}>
@@ -38,7 +39,7 @@ export default function Modal({ modal, closeModal, title, children, width = 'sm:
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className={`relative transform overflow-hidden bg-white shadow-xl ${width} ${height}`}>
-                                <div className="flex justify-between items-center bg-green-600 px-6 py-4 text-white">
+                                <div className={`flex justify-between items-center ${color} px-6 py-4 text-white`}>
                                     <h3 className="text-xl font-bold uppercase">
                                         {title}
                                     </h3>

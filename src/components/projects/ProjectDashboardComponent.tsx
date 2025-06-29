@@ -1,5 +1,5 @@
 import { Project } from "@/types/projectTypes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MenuIcon } from "lucide-react";
@@ -13,7 +13,8 @@ type Props = {
 }
 
 export default function ProjectDashboardComponent({ project, user }: Props) {
- 
+    const navigate = useNavigate();
+
     const { data: hasPermission } = useAuthorization({projectId: project.id, userId: user.id, enabled:true});
 
     return (
@@ -67,6 +68,7 @@ export default function ProjectDashboardComponent({ project, user }: Props) {
                                     <button
                                         type='button'
                                         className='w-full px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-200 transition-colors cursor-pointer'
+                                        onClick={() => navigate(`${location.pathname}?projectId=${project.id}`)}
                                     >
                                         Eliminar Proyecto
                                     </button>

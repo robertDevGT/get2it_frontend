@@ -1,4 +1,5 @@
 import { getAllProjects } from "@/api/ProjectsAPI";
+import ModalDeleteProject from "@/components/modals/ModalDeleteProject";
 import ProjectDashboardComponent from "@/components/projects/ProjectDashboardComponent";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -31,6 +32,8 @@ export default function IndexProjects() {
                     <ProjectDashboardComponent key={project.id} project={project} user={user} />
                 ))}
             </div>
+
+            <ModalDeleteProject />
         </div>
     )
 }

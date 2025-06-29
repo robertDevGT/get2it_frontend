@@ -95,6 +95,19 @@ export async function updateProject({ formData, projectId }: { formData: DraftPr
     }
 }
 
+export async function deleteProject({ projectId }: { projectId: Project['id'] }) {
+    try {
+        const url = `/projects/${projectId}`;
+        const { data } = await api.delete<string>(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error)) {
+            throw new Error(error.response?.data.error);
+        }
+    }
+}
+
+
 export async function checkProjectManager({ projectId, userId }: { projectId: Project['id'], userId: Collaborator['id'] }) {
     try {
         const url = `/projects/${projectId}/check/${userId}`;
