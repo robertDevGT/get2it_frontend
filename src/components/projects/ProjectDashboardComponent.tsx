@@ -20,9 +20,9 @@ export default function ProjectDashboardComponent({ project, user }: Props) {
     return (
         <div className="p-6 bg-white border-l-8 border-green-500 shadow-sm hover:shadow-md transition-shadow duration-200 flex justify-between">
             <div>
-                <p className="text-2xl font-semibold text-gray-800 tracking-tight">
+                <Link to={`/projects/${project.id}`} className="text-2xl font-semibold text-gray-800 tracking-tight hover:text-indigo-500 transition-colors">
                     {project.projectName}
-                </p>
+                </Link>
                 <p className="text-gray-600 mt-1 text-sm leading-relaxed">
                     {project.description}
                 </p>
