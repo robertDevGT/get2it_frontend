@@ -4,9 +4,9 @@ import { Collaborator } from "@/types/collaboratorTypes";
 import { DraftProject, Project } from "@/types/projectTypes";
 import { isAxiosError } from "axios";
 
-export async function getAllProjects() {
+export async function getAllProjects({ projectName }: { projectName: string }) {
     try {
-        const url = '/projects'
+        const url = `/projects?projectName=${projectName}`
         const { data } = await api(url);
         const result = ProjectsSchema.safeParse(data);
         if (result.success) {
