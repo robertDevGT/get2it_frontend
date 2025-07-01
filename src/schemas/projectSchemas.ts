@@ -26,3 +26,8 @@ export const ProjectDetailsSchema = ProjectSchema.pick({ id: true, projectName: 
 export const ProjectTasksSchema = z.array(TaskSchema.pick({ id: true, createdAt: true, description: true, status: true, assignee: true }));
 
 export const ProjectTeamSchema = z.array(TeamMemberSchema);
+
+export const ProjectTeamStadisticsSchema = z.array(z.object({
+    name: z.string(),
+    tasksCompleted: z.number()
+}));

@@ -82,7 +82,7 @@ export default function ModalStatusView({ task }: Props) {
                 <Popover.Panel className="absolute z-50 mt-2 w-64">
                     <div className="rounded-lg bg-white p-4 shadow-xl ring-1 ring-gray-200 flex flex-col gap-2">
                         {statuses.map(status => (
-                            <div className={`px-2 py-1 text-sm  text-white font-bold ${statusStyles[status]} cursor-pointer hover:opacity-75`} onClick={() => mutate({ taskId: Number(taskId), status })}>
+                            <div key={status} className={`px-2 py-1 text-sm  text-white font-bold ${statusStyles[status]} cursor-pointer hover:opacity-75`} onClick={() => mutate({ taskId: Number(taskId), status })}>
                                 <span>
                                     {statusTranslations[status]}
                                 </span>

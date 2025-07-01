@@ -16,6 +16,7 @@ const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails"));
 const CreateProject = lazy(() => import("@/views/projects/CreateProject"));
 const ProjectTeam = lazy(() => import("@/views/projects/ProjectTeam"));
 const EditProject = lazy(() => import("@/views/projects/EditProject"));
+const ProjectStadisticsView = lazy(() => import("@/views/projects/ProjectStadisticsView"));
 
 export default function Router() {
     return (
@@ -36,6 +37,7 @@ export default function Router() {
                         <Route path="/projects/:projectId" element={<ProjectDetails />} />
                         <Route path="/projects/:projectId/edit" element={<EditProject />} />
                         <Route path="/projects/team/:projectId" element={<ProjectTeam />} />
+                        <Route path="/projects/stadistics/:projectId" element={<ProjectStadisticsView />} />
                     </Route>
                 </Routes>
             </Suspense>

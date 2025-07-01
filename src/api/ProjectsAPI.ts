@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { ProjectDetailsSchema, ProjectsSchema, ProjectTasksSchema, ProjectTeamSchema } from "@/schemas/projectSchemas";
+import { ProjectDetailsSchema, ProjectsSchema, ProjectTasksSchema, ProjectTeamSchema, ProjectTeamStadisticsSchema } from "@/schemas/projectSchemas";
 import { Collaborator } from "@/types/collaboratorTypes";
 import { DraftProject, Project } from "@/types/projectTypes";
 import { isAxiosError } from "axios";
@@ -117,6 +117,21 @@ export async function checkProjectManager({ projectId, userId }: { projectId: Pr
         if (isAxiosError(error)) {
             throw new Error(error.response?.data.error);
 
+        }
+    }
+}
+
+export async function getProjectTeamStadistics(id: Project['id']) {
+    try {
+        const url = `/projects/${id}/stadistics`;
+        const { data } = await api(url);
+        const result = ProjectTeamStadisticsSchema.safeParse(data);
+        if (result.success) {
+            return result.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error)) {
+            throw new Error(error.response?.data.error);
         }
     }
 }
