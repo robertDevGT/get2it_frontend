@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { LoginType } from "./types/authTypes";
 import { isAxiosError } from "axios";
-
 import api from "./lib/axios";
+
 
 interface Store {
     authenticate: (formData: LoginType) => Promise<string>;
@@ -26,8 +26,6 @@ export const useStore = create<Store>((set) => ({
             if (isAxiosError(error)) {
                 if (error.response?.data?.error) {
                     throw new Error(error.response.data.error);
-                } else {
-                    throw new Error("Unknown Axios error");
                 }
             }
             throw new Error("Unknown error");
