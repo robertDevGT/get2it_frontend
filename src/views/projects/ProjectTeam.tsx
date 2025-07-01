@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { addCollaboratorToProject, getCollaboratorByEmail } from "@/api/CollaboratorAPI";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, UserIcon } from "lucide-react";
 import { enqueueSnackbar } from "notistack";
 import ProjectDetailsLayout from "./ProjectDetailsLayout";
 import ErrorMessage from "@/components/Error";
@@ -67,11 +67,16 @@ export default function ProjectTeam() {
                 className="bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex flex-col items-center text-center">
-                  <img
-                    src={`${import.meta.env.VITE_UPLOADS_URL}/${member.member.profileImg}`}
-                    alt={`Imagen de ${member.member.name}`}
-                    className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow mb-4"
-                  />
+                  {member.member.profileImg ? (
+                    <img
+                      src={`${import.meta.env.VITE_UPLOADS_URL}/${member.member.profileImg}`}
+                      alt={`Imagen de ${member.member.name}`}
+                      className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow mb-4"
+                    />
+                  ) : (
+                    <UserIcon className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow mb-4" />
+                  )}
+
                   <h3 className="text-lg font-semibold text-gray-800">{member.member.name}</h3>
                   <p className="text-sm text-gray-500">{member.member.email}</p>
                   <span

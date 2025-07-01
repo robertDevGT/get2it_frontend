@@ -55,12 +55,23 @@ export default function ModalSelectAssigneeView({ assignee }: Props) {
             <Popover.Button className="flex items-center gap-2 bg-white border border-gray-300 px-3 py-1 rounded-md shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition">
                 {assignee ? (
                     <div className="flex items-center gap-2">
-                        <img
-                            src={`${import.meta.env.VITE_UPLOADS_URL}/${assignee.profileImg}`}
-                            alt="Imagen de perfil"
-                            className="w-6 h-6 object-cover rounded-full"
-                        />
-                        <p className="text-sm text-gray-700">{assignee.name}</p>
+                        {assignee.profileImg ? (
+                            <>
+                                <img
+                                    src={`${import.meta.env.VITE_UPLOADS_URL}/${assignee.profileImg}`}
+                                    alt="Imagen de perfil"
+                                    className="w-6 h-6 object-cover rounded-full"
+                                />
+                                <p className="text-sm text-gray-700">{assignee.name}</p>
+                            </>
+
+                        ) : (
+                            <>
+                                <UserIcon className="w-6 h-6 object-cover rounded-full" />
+                                <p className="text-sm text-gray-700">{assignee.name}</p>
+                            </>
+
+                        )}
                     </div>
                 ) : (
                     <div className="flex items-center gap-2 text-gray-500">
@@ -89,11 +100,16 @@ export default function ModalSelectAssigneeView({ assignee }: Props) {
                                     onClick={() => handleAssignUser(collaborator.member.id)}
                                     className="flex items-center gap-3 w-full p-2 rounded-md hover:bg-gray-100 transition"
                                 >
-                                    <img
-                                        src={`${import.meta.env.VITE_UPLOADS_URL}/${collaborator.member.profileImg}`}
-                                        alt="Imagen de perfil"
-                                        className="w-7 h-7 rounded-full object-cover"
-                                    />
+                                    {collaborator.member.profileImg ? (
+                                        <img
+                                            src={`${import.meta.env.VITE_UPLOADS_URL}/${collaborator.member.profileImg}`}
+                                            alt="Imagen de perfil"
+                                            className="w-7 h-7 rounded-full object-cover"
+                                        />
+                                    ) : (
+                                        <UserIcon className="w-7 h-7 rounded-full object-cover" />
+                                    )}
+
 
                                     <div className='flex flex-col'>
                                         <span className="text-sm text-gray-800">{collaborator.member.name}</span>

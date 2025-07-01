@@ -1,10 +1,10 @@
-import ErrorMessage from "@/components/Error";
 import { useForm } from "react-hook-form";
 import { Auth } from "types/authTypes";
 import { useMutation } from "@tanstack/react-query";
 import { createAccount } from "@/api/AuthAPI";
 import { enqueueSnackbar } from "notistack";
 import { Link } from "react-router-dom";
+import ErrorMessage from "@/components/Error";
 
 export default function Register() {
   const {
@@ -85,9 +85,15 @@ export default function Register() {
               required: "El Password es obligatorio",
               minLength: {
                 value: 8,
-                message: 'El Password debe ser mínimo de 8 caracteres'
-              }
+                message: "El Password debe tener al menos 8 caracteres",
+              },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
+                message:
+                  "El Password debe contener al menos una mayúscula, una minúscula, un número y un carácter especial",
+              },
             })}
+
             id="password"
             type="password"
             placeholder="Tu contraseña"
