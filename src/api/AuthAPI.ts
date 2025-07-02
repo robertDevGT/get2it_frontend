@@ -58,3 +58,58 @@ export async function changeProfilePic(img: File) {
         }
     }
 }
+
+export async function forgotPassword({ email }: { email: string }) {
+    try {
+        const url = '/auth/forgot-password';
+        const { data } = await api.post<string>(url, { email });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function validateToken({ token }: { token: string }) {
+    try {
+        const url = '/auth/validate-token';
+        const { data } = await api.post(url, { token });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function updatePasswordWithToken({ password, password_confirmation, token }: { token: string, password: string, password_confirmation: string }) {
+    try {
+        const url = `/auth/update-password/${token}`;
+
+        const { data } = await api.post<string>(url, {
+            password,
+            password_confirmation
+        });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+export async function requestConfirmationCode({ email }: { email: string }) {
+    try {
+        const url = '/auth/request-code';
+        const { data } = await api.post<string>(url, { email });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}

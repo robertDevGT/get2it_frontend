@@ -9,7 +9,9 @@ const Profile = lazy(() => import("@/views/public/Profile"));
 const Login = lazy(() => import("@/views/auth/Login"));
 const Register = lazy(() => import("@/views/auth/Register"));
 const ConfirmAccount = lazy(() => import("@/views/auth/ConfirmAccount"));
-
+const ForgotPassword = lazy(() => import("@/views/auth/ForgotPassword"));
+const NewPassword = lazy(() => import("@/views/auth/NewPassword"));
+const RequestCode = lazy(() => import("@/views/auth/RequestCode"));
 
 const IndexProjects = lazy(() => import("@/views/projects/IndexProjects"));
 const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails"));
@@ -28,6 +30,9 @@ export default function Router() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/confirm-account" element={<ConfirmAccount />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/new-password" element={<NewPassword />} />
+                        <Route path="/request-code" element={<RequestCode />} />
                     </Route>
 
                     <Route element={<AuthLayout />}>
