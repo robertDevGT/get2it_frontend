@@ -30,7 +30,7 @@ export default function Index() {
         )}
       </section>
 
-      <main className="lg:p-10 flex gap-5 flex-col lg:flex-row">
+      <main className="flex lg:justify-center gap-2">
         <MainCard
           title="Gestiona tus proyectos"
           content="Crea proyectos, define objetivos y mantén a tu equipo alineado en cada etapa del desarrollo."

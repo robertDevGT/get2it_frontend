@@ -4,9 +4,9 @@ import Header from "@/components/Header"
 
 export default function PublicLayout() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col justify-between">
       <Header />
-      <div className="py-10 lg:py-20 mx-auto">
+      <div className="mt-10">
         <Outlet />
       </div>
 
